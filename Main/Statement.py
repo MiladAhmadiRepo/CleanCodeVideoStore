@@ -19,15 +19,23 @@ class Statement:
 
     # ----------------------------------------------------------------------------------------------------------
 
-    def getName(self):
+    def getCustomerName(self):
         return self.customerName
 
     # ----------------------------------------------------------------------------------------------------------
 
     def generate(self):
-        self._totalAmount = 0
-        self._frequentRenterPoints = 0
-        _result= "Rental Record for " + self.getName() + "\n"
+        self.initialize()
+        _statementText= self.header()
+        _statementText = self.rentalLines(_statementText)
+
+        _statementText+= "You owed " + "{:.1f}".format(self._totalAmount) + "\n"
+        _statementText+= "You earned " + str(self._frequentRenterPoints) + " frequent renter points\n"
+
+        return _statementText
+    # ----------------------------------------------------------------------------------------------------------
+
+    def rentalLines(self, _statementText):
         for rental in self.rentals:
             _thisAmount = 0
             # determines the amount for each line
@@ -45,16 +53,25 @@ class Statement:
             self._frequentRenterPoints += 1
             if rental.getMovie().getPriceCode() == Movie.NEW_RELEASE and rental.getDaysRented() > 1:
                 self._frequentRenterPoints += 1
-            _result+= "\t" + rental.getMovie().getTitle() + "\t" + "{:.1f}".format(_thisAmount) + "\n"
+            _statementText += "\t" + rental.getMovie().getTitle() + "\t" + "{:.1f}".format(_thisAmount) + "\n"
             self._totalAmount += _thisAmount
+        return _statementText
 
-        _result+= "You owed " + "{:.1f}".format(self._totalAmount) + "\n"
-        _result+= "You earned " + str(self._frequentRenterPoints) + " frequent renter points\n"
+    # ----------------------------------------------------------------------------------------------------------
 
-        return _result
+    def header(self):
+        return "Rental Record for " + self.customerName + "\n"
+
+    # ----------------------------------------------------------------------------------------------------------
+
+    def initialize(self):
+        self._totalAmount = 0
+        self._frequentRenterPoints = 0
+
     # ----------------------------------------------------------------------------------------------------------
     def getTotal(self):
         return self._totalAmount
+    # ----------------------------------------------------------------------------------------------------------
 
     def getFrequentRenterPoints(self):
         return self._frequentRenterPoints
