@@ -1,4 +1,4 @@
-from Main.Movie import Movie
+from Main.Rental import Rental
 
 
 class Statement:
@@ -52,8 +52,8 @@ class Statement:
 
     def rentalLine(self, rental):
 
-        _thisAmount =self.determinesAmount( rental)
-        self._frequentRenterPoints +=self.determineFrequentRenterPoints(rental)
+        _thisAmount = rental.rentalDeterminesAmount()
+        self._frequentRenterPoints += rental.rentalDetermineFrequentRenterPoints()
         self._totalAmount += _thisAmount
         return  self.rentalLineFormat(_thisAmount, rental)
 
@@ -62,32 +62,8 @@ class Statement:
     def rentalLineFormat(self, _thisAmount, rental):
         _rentalLine = ""
         _thisAmountFormat="{:.1f}".format(_thisAmount)
-        _rentalLine += f"\t{rental.getMovie().getTitle()}\t{_thisAmountFormat}\n"
+        _rentalLine += f"\t{rental.getTitle()}\t{_thisAmountFormat}\n"
         return _rentalLine
-
-    # ----------------------------------------------------------------------------------------------------------
-
-    def determineFrequentRenterPoints(self, rental):
-        _bounsIsEarned=rental.getMovie().getPriceCode() == Movie.NEW_RELEASE and rental.getDaysRented() > 1
-        if _bounsIsEarned:
-            return 2
-        return 1
-
-    # ----------------------------------------------------------------------------------------------------------
-
-    def determinesAmount(self, rental):
-        _rentalAmount=0
-        if rental.getMovie().getPriceCode() == Movie.REGULAR:
-            _rentalAmount += 2
-            if rental.getDaysRented() > 2:
-                _rentalAmount += (rental.getDaysRented() - 2) * 1.5
-        elif rental.getMovie().getPriceCode() == Movie.NEW_RELEASE:
-            _rentalAmount += rental.getDaysRented() * 3
-        elif rental.getMovie().getPriceCode() == Movie.CHILDRENS:
-            _rentalAmount += 1.5
-            if rental.getDaysRented() > 3:
-                _rentalAmount += (rental.getDaysRented() - 3) * 1.5
-        return _rentalAmount
 
     # ----------------------------------------------------------------------------------------------------------
 

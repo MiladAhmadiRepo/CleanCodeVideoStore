@@ -1,3 +1,4 @@
+from Main.Movie import Movie
 
 
 class Rental:
@@ -13,3 +14,16 @@ class Rental:
 
     def getMovie(self):
         return self._movie
+    # ----------------------------------------------------------------------------------------------------------
+
+    def getTitle(self):
+        return self._movie.getTitle()
+    # ----------------------------------------------------------------------------------------------------------
+
+    def rentalDeterminesAmount(self):
+        return self._movie.determinesAmount(self._daysRented)
+
+    # ----------------------------------------------------------------------------------------------------------
+
+    def rentalDetermineFrequentRenterPoints(self):
+       return  self._movie.determineFrequentRenterPoints(self._daysRented)
