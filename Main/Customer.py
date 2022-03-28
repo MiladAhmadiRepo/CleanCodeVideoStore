@@ -25,8 +25,8 @@ class Customer:
     # ----------------------------------------------------------------------------------------------------------
 
     def statement(self):
-        _totalAmount = 0
-        _frequentRenterPoints = 0
+        self._totalAmount = 0
+        self._frequentRenterPoints = 0
         _result= "Rental Record for " + self.getName() + "\n"
         for rental in self.rentals:
             _thisAmount = 0
@@ -42,14 +42,19 @@ class Customer:
                 if rental.getDaysRented() > 3:
                     _thisAmount += (rental.getDaysRented() - 3) * 1.5
 
-            _frequentRenterPoints += 1
+            self._frequentRenterPoints += 1
             if rental.getMovie().getPriceCode() == Movie.NEW_RELEASE and rental.getDaysRented() > 1:
-                _frequentRenterPoints += 1
+                self._frequentRenterPoints += 1
             _result+= "\t" + rental.getMovie().getTitle() + "\t" + "{:.1f}".format(_thisAmount) + "\n"
-            _totalAmount += _thisAmount
+            self._totalAmount += _thisAmount
 
-        _result+= "You owed " + "{:.1f}".format(_totalAmount) + "\n"
-        _result+= "You earned " + str(_frequentRenterPoints) + " frequent renter points\n"
+        _result+= "You owed " + "{:.1f}".format(self._totalAmount) + "\n"
+        _result+= "You earned " + str(self._frequentRenterPoints) + " frequent renter points\n"
 
         return _result
     # ----------------------------------------------------------------------------------------------------------
+    def getTotal(self):
+        return self._totalAmount
+
+    def getFrequentRenterPoints(self):
+        return self._frequentRenterPoints
