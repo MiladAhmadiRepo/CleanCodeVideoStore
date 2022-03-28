@@ -1,15 +1,15 @@
 from Main.Movie import Movie
 
 
-class Customer:
+class Statement:
     # _name = ""
     # _rentals = []
 
     # ----------------------------------------------------------------------------------------------------------
 
     # default constructor
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, customerName):
+        self.customerName = customerName
         self.rentals=[]
 
     # ----------------------------------------------------------------------------------------------------------
@@ -20,11 +20,11 @@ class Customer:
     # ----------------------------------------------------------------------------------------------------------
 
     def getName(self):
-        return self.name
+        return self.customerName
 
     # ----------------------------------------------------------------------------------------------------------
 
-    def statement(self):
+    def generate(self):
         self._totalAmount = 0
         self._frequentRenterPoints = 0
         _result= "Rental Record for " + self.getName() + "\n"
