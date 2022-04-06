@@ -22,6 +22,16 @@ class Statement:
 
     # ----------------------------------------------------------------------------------------------------------
 
+    def getTotal(self):
+        return self._totalAmount
+
+    # ----------------------------------------------------------------------------------------------------------
+
+    def getFrequentRenterPoints(self):
+        return self._frequentRenterPoints
+
+    # ----------------------------------------------------------------------------------------------------------
+
     def generate(self):
         self.clearTotals()
         _statementText= self.header()
@@ -65,6 +75,7 @@ class Statement:
         _rentalLine += f"\t{rental.getTitle()}\t{_thisAmountFormat}\n"
         return _rentalLine
 
+
     # ----------------------------------------------------------------------------------------------------------
 
     def footer(self):
@@ -73,11 +84,3 @@ class Statement:
         return f"You owed {self._totalAmountText}\nYou earned {self._frequentRenterPointsText} frequent renter points\n"
 
     # ----------------------------------------------------------------------------------------------------------
-
-    def getTotal(self):
-        return self._totalAmount
-
-    # ----------------------------------------------------------------------------------------------------------
-
-    def getFrequentRenterPoints(self):
-        return self._frequentRenterPoints
