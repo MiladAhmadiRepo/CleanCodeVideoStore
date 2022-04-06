@@ -10,6 +10,7 @@ class Statement:
         self.customerName = customerName
         self.rentals=[]
 
+
     # ----------------------------------------------------------------------------------------------------------
 
     def addRental(self, rental):
